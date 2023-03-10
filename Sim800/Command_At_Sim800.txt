@@ -1,0 +1,117 @@
+tutorial https://mlab.vn/index.php?_route_=54289-tong-hop-tap-lenh-at-cua-sim800a-va-bo-tai-lieu-can-thiet.html
+
+sdt 0944347241 vinaphone
+
+0.Kiểm tra cơ bản
+
+
+
+
+Lệnh:  AT&W<CR><LF>
+Mô tả :  lưu lại các lệnh đã cài đặt
+
+1.Lệnh chung
+
+Lệnh:      AT<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Kiểm tra đáp ứng , nếu trả về OK thì Module hoạt động
+
+Lệnh:      ATE[x]<CR><LF>    -> ATE[1]<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Chế độ echo là chế độ phản hồi dữ liệu truyền đến.
+
+x = 1 bật chế độ echo , x = 0 tắt chế độ echo (bạn nên tắt chế độ này)
+
+Lệnh:      AT+IPR=[baud rate]<CR><LF>    ->   AT+IPR=[115200]<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : cài đặt tốc độ giao tiếp dữ liệu với module Sim800A, chỉ cài được các tốc độ sau
+
+baud rate :    0  (auto), 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200
+
+2.Lệnh điều khiển cuộc gọi
+
+Lệnh:      ATD[Số_điện_thoại];<CR><LF>  --> ATD0827417106;<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Lệnh thực hiện cuộc gọi
+
+ 
+
+Lệnh:      ATH<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Lệnh thực hiện kết thúc cuộc gọi , hoặc cúp máy khi có cuộc gọi đến
+
+ 
+
+Lệnh:      ATA<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Lệnh thực hiện chấp nhận khi có cuộc gọi đến
+
+Chú ý: khi nhân được cuộc gọi đến thì Module Sim 900A sẽ phản hồi về như sau
+
+    RING
+
+    RING
+
+Nếu muốn hiển thị thông tin người gọi đến các bạn thực hiên thêm lệnh sau
+
+Lệnh:      AT+CLIP=1<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+ 
+
+3.Lệnh điều khiển tin nhắn
+
+Lệnh:      AT+CMGF=1<CR><LF>
+
+Trả lời:   OK<CR><LF>
+
+Mô tả : Lệnh đưa SMS về chế độ Text , phải có lệnh này mới gửi nhận tin nhắn dạng Text
+
+ 
+
+Cấu trúc gửi tin nhắn
+
+Lệnh:      AT+CMGS=”Số_điện _thoại”<CR><LF>
+
+Đợi đến khi có ký tự ‘>’ được gửi về
+
+Gửi nội dụng tin nhắn : “This is a test”
+
+Gửi mã Ctrl+Z  hay  0x1A để kết thúc nội dung và gửi tin nhắn
+
+Trả lời :  OK<CR><LF>
+
+ 
+
+Lệnh:      AT+CMGR=1<CR><LF>
+
+Mô tả : Đọc một nhắn vừa gửi đến, lệnh được trả về nội dung tin nhắn, thông tin người gửi, thời gian gửi
+
+Chú ý: Nếu Module Sim 900A nhận được một tin nhắn bất kỳ, thì nó gửi về cụm “+CMTI” để thông báo
+
+Trong trường hợp bạn muốn hiển thị trực tiếp nội dung tin nhắn(không lưu vào bộ nhớ của sim) bạn gửi lệnh sau
+
+AT+CNMI=2,2<CR><LF>
+
+Chú ý: sau mỗi lệnh các bạn thường thấy <CR><LF>  thực chất nó là hai mã điều khiển
+
+<CR>  tương ứng 0x0D(hexa)
+
+<LF>  tương ứng 0x0A(hexa)  
+
+Khi các bạn test trên máy tính sau mỗi lệnh các bạn chỉ cần ấn phím Enter
+
+Ví dụ  : gõ AT rồi ấn Enter
